@@ -2,8 +2,8 @@ include "root" {
   path = find_in_parent_folders("terragrunt.hcl")
 }
 
-terraform  {
-  source = "${dirname(find_in_parent_folders())}/modules/psql"
+include "_psql" {
+  path   = "${dirname(find_in_parent_folders())}/_global/_psql.hcl"
 }
 
 dependency "vpc" {
