@@ -1,0 +1,2 @@
+# trenings
+Configs from trenings
