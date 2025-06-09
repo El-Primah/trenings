@@ -2,8 +2,8 @@ include "root" {
   path = find_in_parent_folders("terragrunt.hcl")
 }
 
-terraform  {
-  source = "${dirname(find_in_parent_folders())}/modules/nlb"
+include "_nlb" {
+  path   = "${dirname(find_in_parent_folders())}/_global/_nlb.hcl"
 }
 
 dependency "compute" {
