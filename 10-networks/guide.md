@@ -8,7 +8,8 @@ docker run -d --name c1-A --network network-A --cap-add=NET_ADMIN alpine:3.22 sl
 docker run -d --name c2-B --network network-B --cap-add=NET_ADMIN alpine:3.22 sleep infinity
 docker run -d --name c3-C --network network-C --cap-add=NET_ADMIN alpine:3.22 sleep infinity
 ```
-![[Pasted image 20250811151739.png]]
+<img width="809" height="93" alt="image" src="https://github.com/user-attachments/assets/2f6c2359-6f2f-4f43-8347-8591fe241eeb" />
+
 ### инфа о сетях
 ```
  docker network inspect network-A network-B network-C
@@ -171,12 +172,15 @@ docker run -d --name r2-BC \
 # Подключаем к сети B
 docker network connect network-C r2-BC
 ```
-![[Pasted image 20250811152032.png]]
+<img width="809" height="130" alt="image" src="https://github.com/user-attachments/assets/7b146e0b-0c6c-47a7-bca0-373aa54484ed" />
+
 
 #### пингуем контейнеры
-![[Pasted image 20250811152331.png]]
+<img width="626" height="73" alt="image" src="https://github.com/user-attachments/assets/c6bdccf8-7c0e-4ba8-97f5-4d6fdfbdf6c8" />
+
 #### пингуем роутеры
-![[Pasted image 20250811152257.png]]
+<img width="687" height="694" alt="image" src="https://github.com/user-attachments/assets/948cc01f-6a48-46ac-b953-bab654b388d6" />
+
 
 network-A
 - "Subnet": "172.21.0.0/16",
@@ -214,7 +218,8 @@ docker exec -it r2-BC /bin/sh
 echo 1 > /proc/sys/net/ipv4/ip_forward
 ip route add 172.21.0.0/16 via 172.22.0.3
 ```
-![[Pasted image 20250811153758.png]]
+<img width="736" height="385" alt="image" src="https://github.com/user-attachments/assets/7097d8c6-4845-4521-8f48-2089195f5547" />
+
 
 первый контейнер - 172.21.0.2
 ```
@@ -223,7 +228,8 @@ ip route add 172.22.0.0/16 via 172.21.0.3
 
 ip route add 172.23.0.0/16 via 172.21.0.3
 ```
-![[Pasted image 20250811154246.png]]
+<img width="741" height="355" alt="image" src="https://github.com/user-attachments/assets/fac47d58-1c7c-4b1f-82b6-76a89344a431" />
+
 
 
 
@@ -234,7 +240,8 @@ ip route add 172.21.0.0/16 via 172.22.0.3
 
 ip route add 172.23.0.0/16 via 172.22.0.3
 ```
-![[Pasted image 20250811155316.png]]
+<img width="617" height="148" alt="image" src="https://github.com/user-attachments/assets/ae4fcef9-6b94-4e29-93ea-4574cc9f9b1b" />
+
 
 третий контейнер - 172.23.0.2
 ```
@@ -243,14 +250,17 @@ ip route add 172.21.0.0/16 via 172.23.0.3
 
 ip route add 172.22.0.0/16 via 172.23.0.3
 ```
-![[Pasted image 20250811155710.png]]
+<img width="648" height="115" alt="image" src="https://github.com/user-attachments/assets/2919dd63-9547-4f9a-97a3-d8b1c094616f" />
+
 
 
 #### пингуем c3 и c2 из c1
-![[Pasted image 20250811155847.png]]
+<img width="745" height="280" alt="image" src="https://github.com/user-attachments/assets/13e1870f-a8b8-466c-b8c2-352665c3ccab" />
+
 
 #### traceroute из первого контейнера
-![[Pasted image 20250811160006.png]]
+<img width="741" height="165" alt="image" src="https://github.com/user-attachments/assets/9f72253c-62d1-460f-ab54-073c8f1bc8af" />
+
 
 
 ## Часть 2
@@ -304,18 +314,20 @@ rm /etc/nginx/conf.d/default.conf
 
 nginx -s reload
 
-
+# настраиваем NAT на балансировщие
 iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
 iptables -A FORWARD -i eht0 -o eth1 -j ACCEPT
 iptables -A FORWARD -i eth1 -o eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 ```
 
 #### балансировщик теперь работает как NAT и успешно балансирует трафик
-![[Pasted image 20250811180929.png]]
+<img width="680" height="74" alt="image" src="https://github.com/user-attachments/assets/eda03df9-f7f1-4610-8157-141ad16559b5" />
+
 
 ## Часть 3
 #### текущие сети - 
-![[Pasted image 20250811210752.png]]
+<img width="555" height="175" alt="image" src="https://github.com/user-attachments/assets/d3becf4b-2dc8-4473-ae0f-a59311a3b496" />
+
 
 ```
 
@@ -340,9 +352,8 @@ docker network connect bridge vpn-server
 - Нужен для **создания и управления сетевыми интерфейсами**
 - WireGuard создает виртуальный интерфейс `wg0`
 
-![[Pasted image 20250811211107.png]]
+<img width="972" height="763" alt="image" src="https://github.com/user-attachments/assets/b90cd60f-ecf8-4cf4-9323-4ebb9aae4e3f" />
 
-![[Pasted image 20250811210226.png]]
 
 #### сеть bridge
 ```
@@ -501,7 +512,8 @@ wg-quick down wg0
 wg-quick up wg0
 ```
 #### проверяем работу на клиенте - 
-- должен быть altest handshake -- second ago
+- должен быть laltest handshake -- second ago
+<img width="510" height="215" alt="image" src="https://github.com/user-attachments/assets/eaa5b098-af73-438f-a547-20b255b2797c" />
 
 
 #### настраиваем NAT на vpn-server и запрет ICMP
@@ -549,7 +561,9 @@ docker exec vpn-client curl http://172.22.0.6
 ```
 
 # если работает, то пабеда
-![[Pasted image 20250811214927.png]]
+<img width="428" height="288" alt="image" src="https://github.com/user-attachments/assets/7c91512f-bcfd-443d-8fa2-bdffa4f4d34d" />
+
 
 # итоговые ресурсы в докере - 
-![[Pasted image 20250811215027.png]]
+<img width="958" height="382" alt="image" src="https://github.com/user-attachments/assets/644849db-4246-4aed-b5a2-5e07f17a4117" />
+
