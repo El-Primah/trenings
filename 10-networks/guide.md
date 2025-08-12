@@ -195,7 +195,9 @@ network-C
 - "Gateway": "172.23.0.1"
 
 c1-A - 172.21.0.2
+
 c2-B - 172.22.0.2
+
 c3-C - 172.23.0.2
 
 r1-AB
@@ -281,6 +283,7 @@ docker network connect network-B lb-A
 
 web1 - 172.22.0.5
 web2 - 172.22.0.6
+
 lb-A
 - 172.21.0.4 - A
 
@@ -525,11 +528,14 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 apk add iptables # в alpine нет iptables
 
 # NAT для трафика от VPN клиентов к сети B
-iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -o eth0 -j MASQUERADE
+#-- смотрим на каком интерфейсе у нас network-B 
+# указываем eth1, тк eth0 находиться в сети bridge(docker0),
+# а eth1 в сети network-B (смотрим на каком интерфейсе у нас network-B )
+iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -o eth1 -j MASQUERADE
 
 # Разрешаем forwarding
-iptables -A FORWARD -i wg0 -o eth0 -j ACCEPT
-iptables -A FORWARD -i eth0 -o wg0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i wg0 -o eth1 -j ACCEPT
+iptables -A FORWARD -i eth1 -o wg0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 
 # Запрещаем ICMP
 iptables -A INPUT -p icmp -j DROP
@@ -561,6 +567,9 @@ docker exec vpn-client curl http://172.22.0.6
 ```
 
 # если работает, то пабеда
+<img width="562" height="252" alt="image" src="https://github.com/user-attachments/assets/dc619ace-3cda-4905-bb62-8b43a94eb9e2" />
+
+
 <img width="428" height="288" alt="image" src="https://github.com/user-attachments/assets/7c91512f-bcfd-443d-8fa2-bdffa4f4d34d" />
 
 
