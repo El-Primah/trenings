@@ -528,14 +528,15 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 apk add iptables # в alpine нет iptables
 
 # NAT для трафика от VPN клиентов к сети B
-#-- смотрим на каком интерфейсе у нас network-B 
-# указываем eth1, тк eth0 находиться в сети bridge(docker0),
-# а eth1 в сети network-B (смотрим на каком интерфейсе у нас network-B )
-iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -o eth1 -j MASQUERADE
+# смотрим на каком интерфейсе у нас network-B (172.22.0.0/16)
+# указываем нужный интерфейс 
+№ у меня это - eth0, тк eth1 находиться в сети bridge(docker0),
+# а eth0 в сети network-B
+iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -o eth0 -j MASQUERADE
 
 # Разрешаем forwarding
-iptables -A FORWARD -i wg0 -o eth1 -j ACCEPT
-iptables -A FORWARD -i eth1 -o wg0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i wg0 -o eth0 -j ACCEPT
+iptables -A FORWARD -i eth0 -o wg0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 
 # Запрещаем ICMP
 iptables -A INPUT -p icmp -j DROP
