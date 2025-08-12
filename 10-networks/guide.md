@@ -577,3 +577,7 @@ docker exec vpn-client curl http://172.22.0.6
 # итоговые ресурсы в докере - 
 <img width="958" height="382" alt="image" src="https://github.com/user-attachments/assets/644849db-4246-4aed-b5a2-5e07f17a4117" />
 
+
+# Диаграмма
+<img width="896" height="788" alt="image" src="https://github.com/user-attachments/assets/e9284290-1f72-4790-aa7b-0d700553eb32" />
+
