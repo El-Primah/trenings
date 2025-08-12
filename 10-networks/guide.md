@@ -568,7 +568,7 @@ docker exec vpn-client curl http://172.22.0.6
 ```
 
 # если работает, то пабеда
-<img width="562" height="252" alt="image" src="https://github.com/user-attachments/assets/dc619ace-3cda-4905-bb62-8b43a94eb9e2" />
+<img width="619" height="158" alt="image" src="https://github.com/user-attachments/assets/6c31863b-76be-456f-a4f0-8360d14ae386" />
 
 
 <img width="428" height="288" alt="image" src="https://github.com/user-attachments/assets/7c91512f-bcfd-443d-8fa2-bdffa4f4d34d" />
